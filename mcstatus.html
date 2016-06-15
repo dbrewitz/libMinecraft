@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta  content="text/html; charset=UTF-8"  http-equiv="content-type">
+    <title>MCStatus | Minecraft at Washington County Library</title>
+    <link  rel="icon"  href="./images/favicon.ico"  id="favicon"  type="image/x-icon">
+    <link  rel="shortcut icon"  href="./images/favicon.ico"  type="image/x-icon">
+	<meta  content="width=device-width, initial-scale=1"  name="viewport">
+	<meta name="description" content="Server Status of the Washington County Library Minecraft Server. Learn the rules and commands. Get books or digital books, view our Digital Branch, and come to one of our events.">
+	<meta  name="keywords" content="Minecraft, Washington County Library, Washington County Library Minecraft Server, Minecraft Server, WCL, Park Grove, Hardwood Creek, R.H. Stafford, Valley, Oakdale, Wildwood, Minnesota, Woodbury, Minnesota, MN, Forest Lake, Cottage Grove" >
+    <meta  content="index, follow"  name="robots">
+    <meta  content="7 Days"  name="revisit-after">
+    <!-- Bootstrap -->
+    <link  href="css/bootstrap.min.css"  rel="stylesheet"  type="text/css">
+    <script  type="application/x-javascript">
+	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ if (window.scrollY == 0) { window.scrollTo(0,1);} };
+    </script><!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+	<!--  webfonts  -->
+    <link  href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet"  type="text/css">
+    <!-- // css  -->
+    <link  href="css/style.css"  media="all"  rel="stylesheet"  type="text/css">
+    <!-- start plugins -->
+    <script  src="js/jquery.min.js"  type="text/javascript"></script>
+	<script  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script  src="js/bootstrap.min.js"  type="text/javascript"></script>
+	<script  src="js/wclm.js"  type="text/javascript"></script>
+<script type="text/javascript">
+
+// The Minecraft API urls used to get the JSON data
+var getstatusAPI = "https://mcapi.ca/query/wcl.serverminer.com:26449/info";
+var getstatusAPIP = "https://mcapi.ca/query/wcl.serverminer.com:26449/list";
+
+var all = function () {
+    $.getJSON(getstatusAPIP, function(json) {
+        var list = json.Players.list;
+        var status = json.Status;
+        var motd = json.motd;
+        var playing = json.Players.online;
+        var players = json.Players.max;
+        if (list === false) {
+            list = '';
+        }
+        console.log('List : ', list);
+        if (status === true) {
+            status = 'Online!';
+            $('#status').addClass('label-success');
+        }  else {
+            status = 'Offline';
+        }
+        console.log('Status : ', status);
+        //console.log('MOTD : ', motd);
+        console.log('Playing : ', playing);
+        console.log('Players : ', players);
+   
+        // Set the table div text
+        $('#status').text(status);
+        //  $('#motd').text(motd);
+        $('#playing').text(playing);
+        $('#players').text(players);
+        $('#playerslist').text(list);
+         var cleanp = $('#playerslist').text();
+         var regex = new RegExp(',', 'g');
+         cleanp = cleanp.replace(regex, ', ');
+        $('#playersl').text(cleanp);
+    });
+};
+$(document).ready(all);
+
+setInterval(all, 30000);
+
+/* different version to get /info instead of /list
+var all = $.getJSON(getstatusAPI, function (json) {
+	
+    // Set the variables from the results array
+    var status = json.status;
+	var motd = json.motd;
+	var playing = json.Players.online;
+	var players = json.Players.max;
+
+    console.log('Status : ', status);
+    console.log('MOTD : ', motd);
+	console.log('Playing : ', playing);
+	console.log('Players : ', players);
+
+	if (status === true) {
+		status = 'Online!';
+		$('#status').addClass('label-success');
+	} else {
+		status = 'Offline'
+	}
+
+
+    // Set the table div text
+    $('#status').text(status);
+  //  $('#motd').text(motd);
+	$('#playing').text(playing);
+    $('#players').text(players);
+});
+
+function player() {
+	$.getJSON(getstatusAPI, function (json) {
+	var playing = json.players.online;
+	$('#playing').text(playing);
+	console.log('Playing : ', playing);
+});
+};
+*/
+	
+
+</script>
+<style type="text/css">
+#statusMC {
+  max-width:540px;
+}
+
+</style>
+
+</head>
+<body id="body">
+<div id="headbod">
+ <img id="mcpic" src="images/stev.jpg">
+<div id="statusMC">
+
+<h2 class="hTwo" alt="Washington County Library Minecraft Server" >WCL Minecraft Server</h2>
+
+ 	<div class="section">
+		<div class="front" >Status:</div>
+		<div id="status" class="label">Offline</div>
+	</div>
+	<!-- <div class="section">
+		<div class="front" >MOTD:</div>
+		<div id="motd"></div>
+	</div> -->
+	<div class="section">
+		<div class="front" >Players: </div>
+		<div id='playing'></div><div>of </div><div id='players'></div>
+	</div>
+<div class="section">
+		<div class="front" >List: </div>
+		<div style="display:none" id='playerslist'></div>
+	<div id='playersl'></div>
+	</div>
+<h3 class="hThree">WCL.serverminer.com:26449</h3>
+</div>
+</div>
+</body>
+</html>
