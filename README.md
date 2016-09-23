@@ -1,6 +1,6 @@
 # mc
-Minecraft at WCL
+Minecraft at Washington County Library, MN
 
-These pages are the custom pages for Minecraft at the library. Built with jQuery and Bootstrap.
+These are the custom responsive pages for Minecraft at the library. Built using jQuery and Bootstrap. R
 
 ## Have fun!
